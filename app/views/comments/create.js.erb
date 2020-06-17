@@ -1,0 +1,11 @@
+function getCreate() {
+    $("#comment-body").val("");
+    $(".list-group").prepend("<%= j(render('comments/comment', comment: @comment)) %>");
+    alert("생성이 완료되었습니다.");
+    const noComment = document.querySelectorAll(".no-comment");
+    noComment.forEach((element) => {
+        element.classList.add("hidden");
+    })
+}
+
+getCreate();

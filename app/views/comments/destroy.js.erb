@@ -1,0 +1,17 @@
+function getDestroy() { 
+    $("#comment-<%= @comment.id %>").remove();
+    alert("삭제되었습니다.");
+    const noComment = document.querySelector(".no-comment");
+    const isComment = document.querySelector(".comment");
+    const isComments = document.querySelector(".comments");
+    if (isComment === null) {
+        const div = document.createElement("div");
+        div.classList.add("list-group-item", "list-group-item-action", "no-comment");
+        const h5 = document.createElement("h5");
+        h5.innerText = "댓글이 없습니다.";
+        div.appendChild(h5);
+        isComments.appendChild(div);
+    }
+}
+
+getDestroy();

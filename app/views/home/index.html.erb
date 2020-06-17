@@ -1,0 +1,108 @@
+<style>
+    .hero-image {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1428353077903-d09b3e000f37?ixlib=rb-1.2.1&auto=format&fit=crop&w=2247&q=80');
+        height: 350px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    .hero-text {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+    }
+</style>
+
+<div class="hero-image">
+    <div class="hero-text">
+        <h1 class="text-white">샘플</h1>
+        <p class="mb-5">교육용 블로그 샘플입니다.</p>
+        <%= link_to  "게시글 보러 가기", posts_path, class:" btn btn-primary btn-sm text-white" %>
+        <h1 id="counter" class="text-white">1</h1>
+        <div class="btn btn-primary" id="minus">-</div>
+        <div class="btn btn-primary" id="plus">+</div>
+        <script>
+            const num = document.querySelector("#counter");
+            const plus = document.querySelector("#plus");
+            const minus = document.querySelector("#minus");
+            plus.addEventListener("click", calPlus);
+            minus.addEventListener("click", calMinus);
+
+            function calPlus() {
+                var number = parseInt($("#counter").text())
+                number++;
+                $("#counter").html(number);
+            }
+
+            function calMinus() {
+                var number = parseInt(num.innerText);
+                number = number - 1;
+                num.innerHTML = number;
+            }
+
+            function saveNum() {
+
+            }
+        </script>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row px-3 mb-3">
+        <h2 class="">최근 게시글</h2>
+    </div>
+
+    <div class="list-group">
+        <% if @posts.present? %>
+        <div class="list-group-item list-group-item-action bg-light">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    제목
+                </div>
+                <div class="col-md-5">
+                    내용
+                </div>
+                <div class="col-md-2">
+                    작성자
+                </div>
+            </div>
+        </div>
+        <% @posts.each do |post| %>
+        <div class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="col-md-3">
+                    <%= link_to post_path(post) do %>
+                    <%= post.title%>
+                    <% end %>
+                </div>
+                <div class="col-md-5">
+                    <%= link_to post_path(post) do %>
+                    <%= truncate post.body%>
+                    <% end %>
+                </div>
+                <div class="col-md-2">
+                    <%= post.user&.email %>
+                </div>
+                <div class="col-md-2 text-right">
+                    <% if current_user == post.user%>
+                    <%= link_to  "수정", edit_post_path(post) %> / <%= link_to  "삭제", post_path(post), method: :delete %>
+                    <%end%>
+                </div>
+            </div>
+        </div>
+        <%end%>
+        <%else%>
+        <div class="list-group-item list-group-item-action">
+            <h3>게시글이 없습니다.</h3>
+        </div>
+        <%end%>
+
+
+
+    </div>
+</div>

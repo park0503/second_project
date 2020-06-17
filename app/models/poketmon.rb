@@ -1,0 +1,2 @@
+class Poketmon < ApplicationRecord
+end

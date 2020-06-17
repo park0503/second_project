@@ -1,0 +1,45 @@
+<div class="list-group">
+    <div class="list-group-item list-group-item-action active">
+        <div class="row px-3 justify-content-between">
+            <h3 class="text-white">
+                모든 게시글 보기
+            </h3>
+            <% if current_user %>
+            <%= link_to "새 글 작성", new_post_path, class: "btn bg-white" %>
+            <%end%>
+        </div>
+    </div>
+
+    <% if @posts.present?%>
+    <% @posts.each do |post| %>
+    <div class="list-group-item list-group-item-action">
+        <div class="row">
+            <div class="col-md-2">
+                <%= post.user&.email %>
+            </div>
+            <div class="col-md-2">
+                <%= link_to post_path(post) do %>
+                <%= post.title %>
+                <%end%>
+            </div>
+            <div class="col-md-5">
+                <%= link_to post_path(post) do %>
+                <%= truncate post.body %>
+                <%end%>
+            </div>
+            <div class="col-md-3 text-right">
+                <% if current_user == post.user %>
+                <%= link_to "수정", edit_post_path(post), class: "btn btn-info btn-sm text-white" %>
+                <%= link_to "삭제", post_path(post), method: :delete, class: "btn btn-danger btn-sm text-white" %>
+                <%end%>
+            </div>
+        </div>
+    </div>
+    <%end %>
+    <%else %>
+    <div class="list-group-item list-group-item-action">
+        <h3>게시글이 없습니다.</h3>
+    </div>
+    <%end%>
+</div>
+<%= link_to "뒤로가기", root_path %>

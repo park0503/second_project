@@ -1,0 +1,13 @@
+<% comments ||= [] %>
+
+<div class="list-group comments">
+    <% if comments.present?%>
+    <% comments.each do |comment| %>
+    <%= render 'comments/comment', comment: comment%>
+    <% end %>
+    <% else %>
+    <div class="list-group-item list-group-item-action no-comment">
+        <h5>댓글이 없습니다.</h5>
+    </div>
+    <%end%>
+</div>

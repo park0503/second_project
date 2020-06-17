@@ -1,0 +1,22 @@
+<% post ||= nil %>
+<% if post %>
+<%= form_for post do |f| %>
+<div class="card">
+    <div class="card-body">
+        <div class="from-group">
+            <%= f.label :title %>
+            <%= f.text_field :title, class: "form-control" %>
+        </div>
+        <div class="form-group">
+            <%= f.label :body %>
+            <%= f.text_area :body, class: "form-control" %>
+        </div>
+        <hr class="mt-5">
+        <%= f.hidden_field :user_id, value: current_user&.id %>
+        <%= f.submit "제출", class: "float-right" %>
+    </div>
+</div>
+
+<% end %>
+<% end %>
+<%= link_to "뒤로가기", posts_path %>

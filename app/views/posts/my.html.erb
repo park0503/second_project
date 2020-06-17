@@ -1,0 +1,13 @@
+<% if @posts.present?%>
+    <% @posts.each_with_index do |post, index| %>
+    <%= link_to post_path(post) do %>
+        <%= index+1 %> / <%= post.title %>
+    <% end %>
+    <%= link_to "수정", edit_post_path(post) %>
+    <%= link_to "삭제", post_path(post), method: :delete %>
+        <hr>
+    <% end %>
+<% else %>
+    <h3>게시글이 없습니다.</h3>
+<%end%>
+<%= link_to "뒤로가기", root_path %>
