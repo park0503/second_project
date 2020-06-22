@@ -11,7 +11,9 @@ class PostsController < ApplicationController
     end
     def show
         @post = Post.find_by(id: params[:id])
-        @like = current_user.likes.find_by(post_id: params[:post_id])
+        if current_user.present?
+            @like = current_user.likes.find_by(post_id: params[:post_id])
+        end
     end
     def create
         post = Post.create post_params
@@ -33,14 +35,16 @@ class PostsController < ApplicationController
 
     skip_before_action :verify_authenticity_token
     def toggle
-        @like = current_user.likes.find_by(post_id: params[:post_id])
-        post = Post.find_by(id: params[:id])
-        if @like.present?
-            @like.destroy
+        like = current_user.likes.find_by(post_id: params[:post_id])
+        temp = like
+        if like.present?
+            like.destroy
         else
             Like.create(user_id: current_user.id, post_id: params[:post_id])
+            like = current_user.likes.find_by(post_id: params[:post_id])
+            temp = like
         end
-        redirect_to :back
+        redirect_to post_path(temp.post)
     end
 
     private
