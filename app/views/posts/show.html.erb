@@ -7,22 +7,22 @@
         <%= @post.body %>
     </div>
     <div class="card-footer">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between pl-2 pr-4">
             작성자 : <%= @post.user&.email %>
             <% if current_user.present? %>
-            <div>
-                <form action="/post/<%= @post.id%>/toggle" method="post">
-                    <% if @like.present? %>
-                    <button>
-                        <i class="fas fa-thumbs-up liked"></i>
-                    </button>
-                    <%else%>
-                    <span><%= @like %></span>
-                    <button>
-                        <i class="far fa-thumbs-up"></i>
-                    </button>
-                    <%end%>
-                    <%=@post.likes.size%>
+            <div class="row">
+                <%= form_tag("/post/#{@post.id}/toggle", method:"post", remote:true) do %>
+                <% if @like.present? %>
+                <button>
+                    <i class="fas fa-thumbs-up liked"></i>
+                </button>
+                <%else%>
+                <button>
+                    <i class="far fa-thumbs-up"></i>
+                </button>
+                <%end%>
+                <%end%>
+                <span class="ajaxLikeSize"><%=@post.likes.size%></span>
             </div>
             <%else%>
             <div>
