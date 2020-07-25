@@ -1,6 +1,7 @@
 function getDestroy() { 
-    $("#comment-<%= @comment.id %>").remove();
+    $("#comment-<%= @post.id %>-<%= @comment.id %>").remove();
     alert("삭제되었습니다.");
+    /*
     const noComment = document.querySelector(".no-comment");
     const isComment = document.querySelector(".comment");
     const isComments = document.querySelector(".comments");
@@ -12,6 +13,7 @@ function getDestroy() {
         div.appendChild(h5);
         isComments.appendChild(div);
     }
+    */
 }
 
 getDestroy();

@@ -3,15 +3,14 @@
 <% user ||= nil %>
 <% if comment && post && user %>
 
-<h4 class="mt-5">
-    <%= comment.new_record? ? "댓글 작성" : "댓글 수정" %>
-</h4>
 <div class="form-group">
     <%= form_for comment, remote:true do |f| %>
-    <%= f.text_area :body, class: "form-control", id: "comment-body" %>
+    <%= f.text_field :body, class: "form-control w-100 border-0", id: "comment-body-#{post.id}", placeholder: "Add a Comment..." %>
+    <!--
     <div class="row p-3 justify-content-end">
         <%= f.submit (comment.new_record? ? "댓글 작성" : "댓글 수정") %>
     </div>
+    -->
     <%= f.hidden_field :post_id, value: post.id %>
     <%= f.hidden_field :user_id, value: user&.id %>
     <%end%>

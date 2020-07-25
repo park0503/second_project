@@ -1,51 +1,55 @@
-<div class="card mb-3">
-    <div class="card-header">
-        <h3>
-            <%= @post.title %></h3>
-    </div>
-    <div class="card-body">
-        <%= @post.body %>
-    </div>
-    <div class="card-footer">
-        <div class="row justify-content-between pl-2 pr-4">
-            작성자 : <%= @post.user&.email %>
-            <% if current_user.present? %>
-            <div class="row">
-                <%= form_tag("/post/#{@post.id}/toggle", method:"post", remote:true) do %>
-                <% if @like.present? %>
-                <button>
-                    <i class="fas fa-thumbs-up liked"></i>
-                </button>
-                <%else%>
-                <button>
-                    <i class="far fa-thumbs-up"></i>
-                </button>
-                <%end%>
-                <%end%>
-                <span class="ajaxLikeSize"><%=@post.likes.size%></span>
+<main class="d-flex">
+    <div id="carouselExampleIndicators" class="carousel slide mb-2 w-50" data-touch="true">
+        <ol class="carousel-indicators">
+            <% @post.images.count.times.each do |index| %>
+            <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" class="<%= 'active' if (index == 0) %>"></li>
+            <% end %>
+        </ol>
+        <div class="carousel-inner">
+            <% @post.images.each_with_index do |image, index| %>
+            <div class="carousel-item <%= 'active' if (index == 0) %>">
+                <img src="<%= image.image_url %>" class="d-block w-100" alt="">
             </div>
-            <%else%>
-            <div>
-                <i class="far fa-thumbs-up"></i>
-                <%=@post.likes.size%>
-            </div>
-            <%end%>
+            <% end %>
         </div>
+        <% if current_user.present? %>
+        <div class="row mb-2 ml-1">
+            <%= form_tag("/post/#{@post.id}/toggle", method:"post", remote:true) do %>
+            <%= hidden_field_tag :post_id, @post.id %>
+            <% if current_user.likes.find_by(post_id: @post.id).present? %>
+            <button>
+                <i class="fas fa-heart liked" id="like-<%=@post.id%>"></i>
+            </button>
+            <%else%>
+            <button>
+                <i class="far fa-heart" id="like-<%=@post.id%>"></i>
+            </button>
+            <%end%>
+            <%end%>
+            <span id="ajaxLikeSize-<%= @post.id %>"><%=@post.likes.size%></span>
+        </div>
+        <%else%>
+        <div>
+            <i class="far fa-heart"></i>
+            <%=post.likes.size%>
+        </div>
+        <%end%>
     </div>
-</div>
+    <div class="border align-items-stretch w-50 bg-white" style="padding-left: 10px; padding-right: 10px;">
+        <div style="margin-bottom: 20px;">
+            <%= @post.user&.email %>
+        </div>
+        <h4 style="margin-bottom: 40px;">
+            <%= @post.title %>
+        </h4>
+        <div class="post-info mb-3">
+            <%= truncate @post.body%>
+        </div>
+        <%= render "comments/comments", comments: @post.comments.order(created_at: :desc), post: @post %>
 
-
-
-
-<% if current_user %>
-<%= render "comments/form", comment: Comment.new, post: @post, user: current_user %>
-<%end%>
-
-<hr>
-
-<%= render "comments/comments", comments: @post.comments.order(created_at: :desc) %>
-
-<hr>
-
-
-<%= link_to "뒤로가기", posts_path %>
+        <hr>
+        <% if current_user %>
+        <%= render "comments/form", comment: Comment.new, post: @post, user: current_user %>
+        <% end %>
+    </div>
+</main>

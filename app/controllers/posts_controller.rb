@@ -4,7 +4,10 @@ class PostsController < ApplicationController
         @posts = Post.all
     end
     def new
-
+        @post = Post.new
+        3.times.each do
+            @post.images.build
+        end
     end
     def edit
         @post = Post.find_by(id: params[:id])
@@ -50,6 +53,6 @@ class PostsController < ApplicationController
 
     private
     def post_params
-        params.require(:post).permit(:title, :body, :user_id)
+        params.require(:post).permit(:title, :body, :user_id, images_attributes: [:image])
     end
 end

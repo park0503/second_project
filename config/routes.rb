@@ -17,4 +17,7 @@ end
 resources :comments
 resources :likes
 post '/post/:post_id/toggle' => 'posts#toggle'
+get '/users' => 'home#users'
+post '/follow/:user_id/follow/:target_id' => 'home#follow'
+get '/user/:user_id' => 'home#user_detail'
 end

@@ -1,0 +1,8 @@
+ko:
+  attributes:
+    image: "이미지"
+  activerecord:
+    attributes:
+      post:
+        title: "제목"
+        body: "본문"

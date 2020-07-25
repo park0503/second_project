@@ -18,45 +18,80 @@
     }
 </style>
 
-<div class="hero-image">
-    <div class="hero-text">
-        <h1 class="text-white">샘플</h1>
-        <p class="mb-5">교육용 블로그 샘플입니다.</p>
-        <%= link_to  "게시글 보러 가기", posts_path, class:" btn btn-primary btn-sm text-white" %>
-        <h1 id="counter" class="text-white">1</h1>
-        <div class="btn btn-primary" id="minus">-</div>
-        <div class="btn btn-primary" id="plus">+</div>
-        <script>
-            const num = document.querySelector("#counter");
-            const plus = document.querySelector("#plus");
-            const minus = document.querySelector("#minus");
-            plus.addEventListener("click", calPlus);
-            minus.addEventListener("click", calMinus);
-
-            function calPlus() {
-                var number = parseInt($("#counter").text())
-                number++;
-                $("#counter").html(number);
-            }
-
-            function calMinus() {
-                var number = parseInt(num.innerText);
-                number = number - 1;
-                num.innerHTML = number;
-            }
-
-            function saveNum() {
-
-            }
-        </script>
-    </div>
-</div>
 
 <div class="container my-5">
-    <div class="row px-3 mb-3">
-        <h2 class="">최근 게시글</h2>
-    </div>
 
+
+    <div class="list-group w-75" style="display:table; margin-left:auto; margin-right:auto">
+        <% if @posts.present? %>
+        <% @posts.each do |post| %>
+        <div class="list-group-item list-group-item-action bg-white mb-5 border">
+            <header class="mb-2">
+                <%= link_to "/user/#{post.user.id}" do %>
+                <%= post.user&.email%>
+                <% end %>
+            </header>
+            <div class="carouselExampleIndicators carousel slide mb-2" data-touch="true">
+                <ol class="carousel-indicators">
+                    <% post.images.count.times.each do |index| %>
+                    <li data-target=".carouselExampleIndicators" data-slide-to="<%= index %>" class="<%= 'active' if (index == 0) %>"></li>
+                    <% end %>
+                </ol>
+                <div class="carousel-inner">
+                    <% post.images.each_with_index do |image, index| %>
+                    <div class="carousel-item <%= 'active' if (index == 0) %>">
+                        <img src="<%= image.image_url %>" class="d-block w-100" alt="">
+                    </div>
+                    <% end %>
+                </div>
+            </div>
+            <% if current_user.present? %>
+            <div class="row mb-2 ml-1">
+                <%= form_tag("/post/#{post.id}/toggle", method:"post", remote:true) do %>
+                <%= hidden_field_tag :post_id, post.id %>
+                <% if current_user.likes.find_by(post_id: post.id).present? %>
+                <button>
+                    <i class="fas fa-heart liked" id="like-<%=post.id%>"></i>
+                </button>
+                <%else%>
+                <button>
+                    <i class="far fa-heart" id="like-<%=post.id%>"></i>
+                </button>
+                <%end%>
+                <%end%>
+                <span id="ajaxLikeSize-<%= post.id %>"><%=post.likes.size%></span>
+            </div>
+            <%else%>
+            <div>
+                <i class="far fa-heart"></i>
+                <%=post.likes.size%>
+            </div>
+            <%end%>
+            <div class="post-info mb-3">
+                <%= link_to post_path(post) do %>
+                <%= truncate post.body%>
+                <% end %>
+            </div>
+            <%= render "comments/comments", comments: post.comments.order(created_at: :desc), post: post %>
+
+            <hr>
+            <% if current_user %>
+            <%= render "comments/form", comment: Comment.new, post: post, user: current_user %>
+            <%end%>
+
+
+
+        </div>
+        <%end%>
+        <%else%>
+        <div class="list-group-item list-group-item-action">
+            <h3>게시글이 없습니다.</h3>
+        </div>
+        <%end%>
+
+
+    </div>
+    <!--
     <div class="list-group">
         <% if @posts.present? %>
         <div class="list-group-item list-group-item-action bg-light">
@@ -103,6 +138,6 @@
         <%end%>
 
 
-
     </div>
+    -->
 </div>

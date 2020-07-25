@@ -1,11 +1,11 @@
 function getCreate() {
-    $("#comment-body").val("");
-    $(".list-group").prepend("<%= j(render('comments/comment', comment: @comment)) %>");
+    $("#comment-body-<%= @post.id %>").val("");
+    $("#comments-<%= @post.id %>").prepend("<%= j(render('comments/comment', comment: @comment, post: @post)) %>");
     alert("생성이 완료되었습니다.");
-    const noComment = document.querySelectorAll(".no-comment");
+    /*const noComment = document.querySelectorAll(".no-comment");
     noComment.forEach((element) => {
         element.classList.add("hidden");
-    })
+    })*/
 }
 
 getCreate();

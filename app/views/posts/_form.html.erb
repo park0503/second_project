@@ -11,6 +11,12 @@
             <%= f.label :body %>
             <%= f.text_area :body, class: "form-control" %>
         </div>
+        <div class="form-group">
+            <%= f.fields_for :images do |ff| %>
+            <%= ff.label :image %>
+            <%= ff.file_field :image, class: "from-control"%>
+            <%end%>
+        </div>
         <hr class="mt-5">
         <%= f.hidden_field :user_id, value: current_user&.id %>
         <%= f.submit "제출", class: "float-right" %>

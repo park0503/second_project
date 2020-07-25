@@ -1,8 +1,8 @@
 function getToggle() {
-    $(".fa-thumbs-up").toggleClass("liked");
-    $(".fa-thumbs-up").toggleClass("fas");
-    $(".fa-thumbs-up").toggleClass("far");
-    $(".ajaxLikeSize").html("<%=@post.likes.size%>");
+    $("#like-<%=@post.id%>").toggleClass("liked");
+    $("#like-<%=@post.id%>").toggleClass("fas");
+    $("#like-<%=@post.id%>").toggleClass("far");
+    $("#ajaxLikeSize-<%=@post.id%>").html("<%=@post.likes.size%>");
 }
 
 getToggle();

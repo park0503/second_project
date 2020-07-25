@@ -1,0 +1,39 @@
+<div class="list-group">
+    <div class="list-group-item list-group-item-action active">
+        <div class="row px-3 justify-content-between">
+            <h3 class="text-white">
+                모든 유저 보기
+            </h3>
+        </div>
+    </div>
+
+    <% if @users.present?%>
+    <% @users.each do |user| %>
+    <div class="list-group-item list-group-item-action">
+        <div class="row">
+            <div class="col-md-9">
+                <%= user.email %>
+            </div>
+            <div class="col-md-3 text-right">
+                <%= form_tag("/follow/#{current_user.id}/follow/#{user.id}", method:"post", remote:true) do %>
+                <% if current_user.follows.find_by(target_id: user.id).present? %>
+                <button>
+                    <i class="fab fa-twitter followed"></i>
+                </button>
+                <%else%>
+                <button>
+                    <i class="fab fa-twitter"></i>
+                </button>
+                <%end%>
+                <%end%>
+            </div>
+        </div>
+    </div>
+    <%end%>
+    <%else %>
+    <div class="list-group-item list-group-item-action">
+        <h3>유저가 없습니다.</h3>
+    </div>
+    <%end%>
+</div>
+<%= link_to "뒤로가기", root_path %>

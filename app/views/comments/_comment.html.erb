@@ -1,16 +1,17 @@
 <% comment ||= nil %>
 <% if comment %>
-<div class="list-group-item list-group-item-action comment" id="comment-<%= comment.id %>">
-    <div class=" row">
-        <div class="col-md-2">
+<div class="list-group-item border-0 comment" id="comment-<%= post.id %>-<%= comment.id %>">
+    <div class=" row justify-content-between">
+        <div class="">
             <%= comment.user&.email %>
         </div>
-        <div class="col-md-7">
+        <div class="">
             <%= comment.body %>
         </div>
-        <div class="col-md-3 text-right">
+        <div class="text-right">
             <% if current_user == comment.user %>
             <%= link_to "삭제", comment_path(comment), class: "text-danger", method: :delete, remote:true %>
+            <%= hidden_field_tag :post_id, post.id %>
             <% end %>
         </div>
     </div>
