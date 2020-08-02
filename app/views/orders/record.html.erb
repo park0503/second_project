@@ -1,0 +1,40 @@
+<div class="container my-5">
+
+    <h1 class="text-center">구매내역
+    </h1>
+
+    <h3 class="text-center">배송중</h3>
+    <div class="list-group standard">
+        <% if @orders.present? %>
+        <% @orders.each do |order| %>
+        <div class="list-group-item list-group-item-action bg-white mb-5 border">
+            <% line_items=LineItem.where(order:order) %>
+            <% line_items.each do |line_item| %>
+            <div class="item-info mb-1">
+                <%= line_item.item.title%>
+            </div>
+            <div class="item-info mb-1 text-right">
+                수량 : <%= line_item.quantity %>개
+                가격 : <%= line_item.amount %>원
+            </div>
+            <% end %>
+            <div class="text-center">
+                결제일: <%= order.updated_at %>
+                <br>
+                총 가격: <%= order.amount %>원
+            </div>
+        </div>
+        <%end%>
+        <%else%>
+        <div class=" list-group-item list-group-item-action">
+            <h3>배송중인 상품이 없습니다.</h3>
+        </div>
+        <%end%>
+    </div>
+    <h3 class="text-center">배송완료</h3>
+    <div class="list-group standard">
+        <div class=" list-group-item list-group-item-action">
+            <h3>배송 완료된 상품이 없습니다.</h3>
+        </div>
+    </div>
+</div>

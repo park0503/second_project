@@ -1,0 +1,59 @@
+<div class="container my-5">
+    <h1 class="text-center">STORE
+    </h1>
+
+    <div class="d-flex justify-content-between">
+        <%= link_to "상품 올리기", new_item_path%>
+        <%= link_to "장바구니", orders_path %>
+    </div>
+
+    <div class="list-group standard">
+        <% if @items.present? %>
+        <% @items.each do |item| %>
+        <div class="list-group-item list-group-item-action bg-white mb-5 border">
+            <header class="mb-2">
+                <a href="/users/<%= item.user.id %>}">
+                    <% if item.user.image.present? %>
+                    <img src="<%= item.user.image.url %>" class="rounded-circle" style="width:22px; height:22px"></img>
+                    <%else%>
+                    <i class="fas fa-user fa-lg text-dark"></i>
+                    <%end%>
+                    <%= link_to "/users/#{item.user.id}" do %>
+                    <% if item.user.name.present? %>
+                    <%= item.user.name %>
+                    <% else %>
+                    <%= item.user&.email%>
+                    <% end %>
+                    <% end %>
+                </a>
+            </header>
+            <div class="item-info mb-1 text-center">
+                <%= link_to item_path(item) do %>
+                <%= item.title%>
+                <% end %>
+            </div>
+            <div class="item-info mb-1 text-center">
+                <%= item.price%>
+            </div>
+            <% line_item = LineItem.where(order: Order.where(user: current_user).find_by(status: 0)).find_by(item: item) %>
+            <% if line_item.present? %>
+            <%= link_to line_item_path(line_item, id: item.id), method: :delete do %>
+            <i class="fas fa-shopping-cart fa-lg text-blue"></i>
+            <% end %>
+            <% else %>
+            <%= link_to line_items_path(item, id: item.id), method: :post do %>
+            <i class="fas fa-shopping-cart fa-lg text-dark"></i>
+            <% end %>
+            <% end %>
+        </div>
+
+        <%end%>
+        <%else%>
+        <div class="list-group-item list-group-item-action">
+            <h3>상품이 없습니다.</h3>
+        </div>
+        <%end%>
+
+
+
+    </div>

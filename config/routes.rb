@@ -16,8 +16,12 @@ resources :posts do
 end
 resources :comments
 resources :likes
+resources :items
+resources :users
+resources :orders
+resources :line_items
 post '/post/:post_id/toggle' => 'posts#toggle'
-get '/users' => 'home#users'
 post '/follow/:user_id/follow/:target_id' => 'home#follow'
-get '/user/:user_id' => 'home#user_detail'
+get '/order/complete' => 'orders#complete'
+get '/order/record' => 'orders#record'
 end

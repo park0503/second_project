@@ -22,13 +22,24 @@
 <div class="container my-5">
 
 
-    <div class="list-group w-75" style="display:table; margin-left:auto; margin-right:auto">
+    <div class="list-group standard">
         <% if @posts.present? %>
         <% @posts.each do |post| %>
         <div class="list-group-item list-group-item-action bg-white mb-5 border">
             <header class="mb-2">
-                <%= link_to "/user/#{post.user.id}" do %>
+                <a href="/users/<%= post.user.id %>}">
+                    <% if post.user.image.present? %>
+                    <img src="<%= post.user.image.url %>" class="rounded-circle" style="width:22px; height:22px"></img>
+                    <%else%>
+                    <i class="fas fa-user fa-lg text-dark"></i>
+                    <%end%>
+                </a>
+                <%= link_to "/users/#{post.user.id}" do %>
+                <% if post.user.name.present? %>
+                <%= post.user.name %>
+                <% else %>
                 <%= post.user&.email%>
+                <% end %>
                 <% end %>
             </header>
             <div class="carouselExampleIndicators carousel slide mb-2" data-touch="true">

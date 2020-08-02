@@ -1,0 +1,54 @@
+<div class="container my-5">
+
+    <h1 class="text-center">장바구니
+    </h1>
+
+    <div class="list-group standard">
+        <% if @line_items.present? %>
+        <% @line_items.each do |line_item| %>
+        <div class="list-group-item list-group-item-action bg-white mb-5 border d-flex justify-content-between">
+            <div class="item-info mb-1">
+                <%= line_item.item.title%>
+            </div>
+            <div class="item-info mb-1">
+                수량 :
+                <div id="minus-<%=line_item.id%>" class="btn btn-sm border">-</div>
+                <span id="quantity-<%=line_item.id%>"><%= line_item.quantity %>
+                </span>
+                <div id="plus-<%=line_item.id%>" class="btn btn-sm border">+</div>
+                <span id="price-<%=line_item.id%>"><%= line_item.amount %></span>원
+                <script>
+                    $("#minus-<%=line_item.id%>").on("click", calMinus);
+                    $("#plus-<%=line_item.id%>").on("click", calPlus)
+
+                    function calPlus() {
+                        let number = parseInt($("#quantity-<%=line_item.id%>").text())
+                        number++;
+                        $("#quantity-<%=line_item.id%>").html(number);
+                    }
+
+                    function calMinus() {
+                        let number = parseInt($("#quantity-<%=line_item.id%>").text())
+                        if (number > 1) {
+                            number--;
+                            $("#quantity-<%=line_item.id%>").html(number);
+                        }
+                    }
+                </script>
+            </div>
+            <%= link_to "삭제", line_item_path(line_item, src:5), method: :delete, class: "btn btn-danger btn-sm text-white" %>
+        </div>
+        <%end%>
+        <%else%>
+        <div class=" list-group-item list-group-item-action">
+            <h3>장바구니가 비었습니다.</h3>
+        </div>
+        <%end%>
+    </div>
+    <%if @line_items.present?%>
+    <div class="text-center">
+        <%= link_to "구매하기", edit_order_path(@order)%>
+    </div>
+    <%end%>
+
+</div>
