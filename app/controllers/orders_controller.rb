@@ -2,6 +2,10 @@ class OrdersController < ApplicationController
     def index
         @order = Order.where(user_id: current_user.id).find_by(status: 0)
         @line_items = LineItem.where(order: @order)
+        @order.update(amount: 0)
+        @line_items.each do |snatch|
+            @order.update(amount: @order.amount + snatch.amount)
+        end
     end
     def new
     end

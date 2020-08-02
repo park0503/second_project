@@ -6,37 +6,8 @@
     <div class="list-group standard">
         <% if @line_items.present? %>
         <% @line_items.each do |line_item| %>
-        <div class="list-group-item list-group-item-action bg-white mb-5 border d-flex justify-content-between">
-            <div class="item-info mb-1">
-                <%= line_item.item.title%>
-            </div>
-            <div class="item-info mb-1">
-                수량 :
-                <div id="minus-<%=line_item.id%>" class="btn btn-sm border">-</div>
-                <span id="quantity-<%=line_item.id%>"><%= line_item.quantity %>
-                </span>
-                <div id="plus-<%=line_item.id%>" class="btn btn-sm border">+</div>
-                <span id="price-<%=line_item.id%>"><%= line_item.amount %></span>원
-                <script>
-                    $("#minus-<%=line_item.id%>").on("click", calMinus);
-                    $("#plus-<%=line_item.id%>").on("click", calPlus)
-
-                    function calPlus() {
-                        let number = parseInt($("#quantity-<%=line_item.id%>").text())
-                        number++;
-                        $("#quantity-<%=line_item.id%>").html(number);
-                    }
-
-                    function calMinus() {
-                        let number = parseInt($("#quantity-<%=line_item.id%>").text())
-                        if (number > 1) {
-                            number--;
-                            $("#quantity-<%=line_item.id%>").html(number);
-                        }
-                    }
-                </script>
-            </div>
-            <%= link_to "삭제", line_item_path(line_item, src:5), method: :delete, class: "btn btn-danger btn-sm text-white" %>
+        <div id="line_item_<%= line_item.id %>">
+            <%= render line_item %>
         </div>
         <%end%>
         <%else%>
@@ -47,8 +18,27 @@
     </div>
     <%if @line_items.present?%>
     <div class="text-center">
+        <span id="order-amount">총 금액: <%= @order.amount %>원</span>
         <%= link_to "구매하기", edit_order_path(@order)%>
     </div>
     <%end%>
 
 </div>
+<script>
+    // $("#minus-<%# line_item.id%>").on("click", calMinus);
+    // $("#plus-<%# line_item.id%>").on("click", calPlus)
+
+    // function calPlus() {
+    //     let number = parseInt($("#quantity-<%# line_item.id%>").text())
+    //     number++;
+    //     $("#quantity-<%#line_item.id%>").html(`<%#line_item.update(quantity:line_item.quantity+1)%><%#line_item.quantity%>`);
+    // }
+
+    // function calMinus() {
+    //     let number = parseInt($("#quantity-<%#line_item.id%>").text())
+    //     if (number > 1) {
+    //         number--;
+    //         $("#quantity-<%#line_item.id%>").html(`<%#line_item.update(quantity:line_item.quantity-1)%><%#line_item.quantity%>`);
+    //     }
+    // }
+</script>

@@ -19,7 +19,11 @@ resources :likes
 resources :items
 resources :users
 resources :orders
-resources :line_items
+resources :line_items do
+  member do
+    get :change_qty
+  end
+end
 post '/post/:post_id/toggle' => 'posts#toggle'
 post '/follow/:user_id/follow/:target_id' => 'home#follow'
 get '/order/complete' => 'orders#complete'

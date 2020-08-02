@@ -1,6 +1,10 @@
 class ItemsController < ApplicationController
     def index
         @items = Item.order(created_at: :desc)
+        order = Order.where(user_id: current_user.id).find_by(status: 0)
+        if order.blank?
+            Order.create(user: current_user, status: 0, amount: 0)
+        end
     end
     def new
         @item = Item.new
