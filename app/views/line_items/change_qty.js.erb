@@ -1,0 +1,2 @@
+$("#line_item_<%= @line_item&.id %>").html("<%= j(render 'line_items/line_item', line_item: @line_item) %>");
+$("#order-amount").html("총 금액: <%= @order.amount %>원")

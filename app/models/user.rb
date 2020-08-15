@@ -15,4 +15,7 @@ class User < ApplicationRecord
   has_many :received_follows, class_name: "Follow", foreign_key: :target_id, dependent: :destroy
   has_many :followers, through: :received_follows, source: :user
 
+  has_many :items, dependent: :destroy
+  has_many :orders, dependent: :destroy
+
 end

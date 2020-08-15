@@ -7,13 +7,16 @@
             <a href="<%= root_path %>" class="ml-3">
                 <i class="fas fa-home fa-lg text-dark"></i>
             </a>
+            <a href="<%= items_path %>" class="ml-3">
+                <i class="fas fa-store fa-lg text-dark"></i>
+            </a>
             <% if current_user.present? %>
             <a href="/users" class="ml-3">
                 <i class="fas fa-heart fa-lg text-dark"></i>
             </a>
-            <a href="/posts/my" class="ml-3">
+            <a href="/users/<%= current_user.id %>}" class="ml-3">
                 <% if current_user.image.present? %>
-                <img src="<% current_user.image.image_url %>" class="rounded-circle" sytle="width:22px; height22px"></img>
+                <img src="<%= current_user.image.url %>" class="rounded-circle" style="width:22px; height:22px"></img>
                 <%else%>
                 <i class="fas fa-user fa-lg text-dark"></i>
                 <%end%>

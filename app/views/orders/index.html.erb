@@ -1,0 +1,44 @@
+<div class="container my-5">
+
+    <h1 class="text-center">장바구니
+    </h1>
+
+    <div class="list-group standard">
+        <% if @line_items.present? %>
+        <% @line_items.each do |line_item| %>
+        <div id="line_item_<%= line_item.id %>">
+            <%= render line_item %>
+        </div>
+        <%end%>
+        <%else%>
+        <div class=" list-group-item list-group-item-action text-center">
+            <h3>장바구니가 비었습니다.</h3>
+        </div>
+        <%end%>
+    </div>
+    <%if @line_items.present?%>
+    <div class="d-flex align-items-center flex-column">
+        <div id="order-amount">총 금액: <%= @order.amount %>원</div>
+        <%= link_to "구매하기", edit_order_path(@order), class: "prod-btn"%>
+    </div>
+    <%end%>
+
+</div>
+<script>
+    // $("#minus-<%# line_item.id%>").on("click", calMinus);
+    // $("#plus-<%# line_item.id%>").on("click", calPlus)
+
+    // function calPlus() {
+    //     let number = parseInt($("#quantity-<%# line_item.id%>").text())
+    //     number++;
+    //     $("#quantity-<%#line_item.id%>").html(`<%#line_item.update(quantity:line_item.quantity+1)%><%#line_item.quantity%>`);
+    // }
+
+    // function calMinus() {
+    //     let number = parseInt($("#quantity-<%#line_item.id%>").text())
+    //     if (number > 1) {
+    //         number--;
+    //         $("#quantity-<%#line_item.id%>").html(`<%#line_item.update(quantity:line_item.quantity-1)%><%#line_item.quantity%>`);
+    //     }
+    // }
+</script>

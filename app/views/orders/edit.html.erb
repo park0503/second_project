@@ -1,0 +1,35 @@
+<h1 class="text-center">결재 정보 작성</h1>
+
+<% if @order.present? %>
+<%= form_for @order do |f| %>
+<div class="container w-75 my-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="from-group">
+                <%= f.label :name %>
+                <%= f.text_field :name, class: "form-control" %>
+            </div>
+            <div class="from-group">
+                <%= f.label :phone %>
+                <%= f.text_field :phone, class: "form-control" %>
+            </div>
+            <div class="from-group">
+                <%= f.label :zipcode %>
+                <%= f.text_field :zipcode, class: "form-control" %>
+            </div>
+            <div class="from-group">
+                <%= f.label :address %>
+                <%= f.text_field :address1, class: "form-control" %>
+            </div>
+            <div class="from-group">
+                <%= f.label :address_detail %>
+                <%= f.text_field :address2, class: "form-control" %>
+            </div>
+            <hr class="mt-5">
+            <%= f.hidden_field :user_id, value: @order&.id %>
+            <%= f.submit "구매", class: "float-right" %>
+        </div>
+    </div>
+</div>
+<% end %>
+<% end %>
