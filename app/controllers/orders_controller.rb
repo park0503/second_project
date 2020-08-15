@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
        order.update order_params
        order.update(status:1)
        
-       Order.create(user: current_user, status: 0, )
+       Order.create(user: current_user, status: 0, amount: 0)
        redirect_to '/order/complete'
     end
     def destroy

@@ -43,11 +43,11 @@
 
 
 
-    <div class="px-2 d-flex flex-wrap justify-content-start ">
+    <div class="px-2 d-flex flex-wrap justify-content-around ">
         <% if @posts.present? %>
         <% @posts.each do |post| %>
 
-        <a href="/posts/<%= post.id %>" class="border position-relative post-preview mx-1 mb-2" style="width: 30%">
+        <a href="/posts/<%= post.id %>" class="border position-relative post-preview mb-2" style="width: 30%">
             <%if Image.find_by(post_id: post.id).present? %>
             <img src="<%= Image.find_by(post_id: post.id).image_url %>" class="position-absolute w-100 h-100">
             <%else%>

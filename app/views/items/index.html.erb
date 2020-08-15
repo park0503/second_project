@@ -2,15 +2,17 @@
     <h1 class="text-center">STORE
     </h1>
 
+    <% if current_user.present? %>
     <div class="d-flex justify-content-between">
         <%= link_to "상품 올리기", new_item_path%>
         <%= link_to "장바구니", orders_path %>
     </div>
+    <% end %>
 
-    <div class="list-group standard">
+    <div class="list-group standard shop-main">
         <% if @items.present? %>
         <% @items.each do |item| %>
-        <div class="list-group-item list-group-item-action bg-white mb-5 border">
+        <div class="list-group-item list-group-item-action bg-white mb-5 border shop-item">
             <header class="mb-2">
                 <a href="/users/<%= item.user.id %>}">
                     <% if item.user.image.present? %>
@@ -27,22 +29,31 @@
                     <% end %>
                 </a>
             </header>
-            <div class="item-info mb-1 text-center">
-                <%= link_to item_path(item) do %>
+            <%= link_to item_path(item), class:"shop-item" do %>
+            <img class="item-img" src="<%= item.image.url %>"></img>
+            <div class="item-info mb-1 text-center header">
                 <%= item.title%>
-                <% end %>
             </div>
             <div class="item-info mb-1 text-center">
-                <%= item.price%>
+                <%= item.price%>원
             </div>
+            <% end %>
             <% line_item = LineItem.where(order: Order.where(user: current_user).find_by(status: 0)).find_by(item: item) %>
-            <% if line_item.present? %>
-            <%= link_to line_item_path(line_item, id: item.id), method: :delete do %>
-            <i class="fas fa-shopping-cart fa-lg text-blue"></i>
+            <% if current_user.present? %>
+            <% if current_user === item.user %>
+            <%= link_to  item_path(item), method: :delete, class:"del-btn" do%>
+            <i class="fab fa-xbox fa-lg text-danger"></i> 상품 삭제하기
             <% end %>
             <% else %>
-            <%= link_to line_items_path(item, id: item.id), method: :post do %>
-            <i class="fas fa-shopping-cart fa-lg text-dark"></i>
+            <% if line_item.present? %>
+            <%= link_to line_item_path(line_item, id: item.id), method: :delete, class:"prod-btn" do %>
+            <i class="fas fa-shopping-cart fa-lg text-primary"></i> 장바구니에서 빼기
+            <% end %>
+            <% else %>
+            <%= link_to line_items_path(item, id: item.id), method: :post, class: "prod-btn" do %>
+            <i class="fas fa-shopping-cart fa-lg text-dark"></i> 장바구니에 담기
+            <% end %>
+            <% end %>
             <% end %>
             <% end %>
         </div>
@@ -53,6 +64,8 @@
             <h3>상품이 없습니다.</h3>
         </div>
         <%end%>
+
+
 
 
 

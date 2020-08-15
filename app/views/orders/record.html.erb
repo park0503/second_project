@@ -10,12 +10,19 @@
         <div class="list-group-item list-group-item-action bg-white mb-5 border">
             <% line_items=LineItem.where(order:order) %>
             <% line_items.each do |line_item| %>
-            <div class="item-info mb-1">
-                <%= line_item.item.title%>
+            <%= link_to item_path(line_item.item) do %>
+            <div class="d-flex">
+                <img src="<%= line_item.item.image.url %>" class="line_item-img mx-2"></img>
+                <div class="item-info mb-1 mx-2">
+                    <%= line_item.item.title%>
+                </div>
             </div>
-            <div class="item-info mb-1 text-right">
-                수량 : <%= line_item.quantity %>개
-                가격 : <%= line_item.amount %>원
+            <% end %>
+            <div>
+                <div class=" item-info mb-1 text-right">
+                    수량 : <%= line_item.quantity %>개
+                    가격 : <%= line_item.amount %>원
+                </div>
             </div>
             <% end %>
             <div class="text-center">
@@ -24,16 +31,17 @@
                 총 가격: <%= order.amount %>원
             </div>
         </div>
-        <%end%>
-        <%else%>
-        <div class=" list-group-item list-group-item-action">
-            <h3>배송중인 상품이 없습니다.</h3>
-        </div>
-        <%end%>
+        <% end %>
     </div>
+    <%else%>
+    <div class=" list-group-item list-group-item-action text-center standard">
+        <h3>배송중인 상품이 없습니다.</h3>
+    </div>
+    <%end%>
+
     <h3 class="text-center">배송완료</h3>
     <div class="list-group standard">
-        <div class=" list-group-item list-group-item-action">
+        <div class=" list-group-item list-group-item-action text-center">
             <h3>배송 완료된 상품이 없습니다.</h3>
         </div>
     </div>

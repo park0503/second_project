@@ -8,18 +8,16 @@
             <%= f.text_field :title, class: "form-control" %>
         </div>
         <div class="form-group">
+            <%= f.label :image %>
+            <%= f.file_field :image, class:"form-control" %>
+        </div>
+        <div class="form-group">
             <%= f.label :body %>
             <%= f.text_area :body, class: "form-control" %>
         </div>
         <div class="form-group">
             <%= f.label :price %>
             <%= f.number_field :price, class: "form-control" %>
-        </div>
-        <div class="from-group">
-            <%= f.fields_for :images do |ff| %>
-            <%= ff.label :image %>
-            <%= ff.file_field :image, class: "from-control"%>
-            <%end%>
         </div>
         <hr class="mt-5">
         <%= f.hidden_field :user_id, value: current_user&.id %>

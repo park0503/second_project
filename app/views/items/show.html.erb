@@ -1,0 +1,99 @@
+<main>
+    <% if current_user.present? %>
+    <div class="d-flex justify-content-between">
+        <%= link_to "상품 올리기", new_item_path%>
+        <%= link_to "장바구니", orders_path %>
+    </div>
+    <% end %>
+    <div class="d-flex pord-header py-3">
+        <div class="w-50 prod-img">
+            <img src="<%= @item.image.url %>" class="w-100 h-100"></img>
+        </div>
+        <div class=" align-items-stretch w-50 bg-white prod-header" style="padding-left: 10px; padding-right: 10px;">
+            <a href="/users/<%= @item.user.id %>}">
+                <% if @item.user.image.present? %>
+                <img src="<%= @item.user.image.url %>" class="rounded-circle" style="width:22px; height:22px"></img>
+                <%else%>
+                <i class="fas fa-user fa-lg text-dark"></i>
+                <%end%>
+                <%= link_to "/users/#{@item.user.id}" do %>
+                <% if @item.user.name.present? %>
+                <%= @item.user.name %>
+                <% else %>
+                <%= @item.user&.email%>
+                <% end %>
+                <% end %>
+            </a>
+            <h2 class="prod-title">
+                <%= @item.title %>
+            </h2>
+            <hr>
+            <div class="prod-price-container">
+                <div class="prod-price">
+                    <%= @item.price %>원
+                </div>
+                <div class="prod-remain">
+                    재고: 충분함
+                </div>
+            </div>
+            <hr>
+            <div class="prod-delivery">
+                <div class="delivery__fee">
+                    무료배송
+                </div>
+                <div class="delivery__time">
+                    <span class="delivery__time__date">2039년 10월 14일</sapn> 도착 보장
+                </div>
+            </div>
+            <hr>
+            <div class="prod-cashback">
+                <i class="fas fa-coins fa-lg text-warning"></i> 캐시적립 혜택 | 최대 <span class="cashback-how-much"><%= @item.price * 0.55 %></span>원 적립
+                <div class="cashback-container">
+                    <span class="cashback-info">일반 결제 시 0.5% 적립</span>
+                    <span class="cashback-info">인스타 머니 결제 시 5% 적립</span>
+                    <span class="cashback-info">
+                        [인스타 머니 + 스마일 클럽] 결제 시 55% 적립
+                    </span>
+                    <a href="http://ajou.ac.kr">
+                        <div class="prod-btn">인스타 머니 충전하기</div>
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="prod-cart">
+                <% if current_user.present? %>
+                <% if current_user === @item.user %>
+                <%= link_to  item_path(@item), method: :delete do%>
+                <div class="del-btn">
+                    <i class="fab fa-xbox fa-lg text-danger"></i>
+                    <span>상품 삭제하기</span>
+                </div>
+                <% end %>
+                <% else %>
+                <% if @line_item.present? %>
+                <%= link_to line_item_path(@line_item, id: @item.id), method: :delete do %>
+                <div class="prod-btn">
+                    <i class="fas fa-shopping-cart fa-lg text-primary"></i>
+                    <sapn>장바구니에서 빼기</span>
+                </div>
+                <% end %>
+                <% else %>
+                <%= link_to line_items_path(@item, id: @item.id), method: :post do %>
+                <div class="prod-btn">
+                    <i class="fas fa-shopping-cart fa-lg text-dark"></i>
+                    <span class="">장바구니에 담기</span>
+                </div>
+                <% end %>
+                <% end %>
+                <% end %>
+                <% end %>
+            </div>
+
+        </div>
+    </div>
+    <div class="product">
+        <div class="@item-info mb-3">
+            <%= @item.body%>
+        </div>
+    </div>
+</main>

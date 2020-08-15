@@ -1,18 +1,17 @@
 <% line_item ||= nil %>
 <% if line_item %>
 <div class="list-group-item list-group-item-action bg-white mb-5 border d-flex justify-content-between">
-    <div class="item-info mb-1">
+    <img src="<%= line_item.item.image.url %>" class="line_item-img mx-2">
+    <div class="item-info mb-1 mx-2 col-5">
         <%= line_item.item.title %>
     </div>
-    <div class="item-info mb-1">
-        수량 :
+    <div class="item-info mb-1 mx-2">
         <a href="<%= change_qty_line_item_path(line_item, type: "minus") %>" id="minus-<%=line_item.id%>" class="btn btn-sm border" data-remote="true">-</a>
         <span id="quantity-<%=line_item.id%>"><%= line_item.quantity %>
         </span>
         <a href="<%= change_qty_line_item_path(line_item, type: "plus") %>" id="plus-<%=line_item.id%>" class="btn btn-sm border" data-remote="true">+</a>
-        <span id="price-<%=line_item.id%>"><%= line_item.amount %></span>원
-
     </div>
-    <%= link_to "삭제", line_item_path(line_item, src:5), method: :delete, class: "btn btn-danger btn-sm text-white" %>
+    <span id="price-<%=line_item.id%>" class="item-info mb-1 mx-2"><%= line_item.amount %>원</span>
+    <%= link_to "삭제", line_item_path(line_item, src:5), method: :delete, class: "btn btn-danger btn-sm text-white d-flex align-items-center" %>
 </div>
 <% end %>

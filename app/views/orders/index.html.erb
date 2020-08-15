@@ -11,15 +11,15 @@
         </div>
         <%end%>
         <%else%>
-        <div class=" list-group-item list-group-item-action">
+        <div class=" list-group-item list-group-item-action text-center">
             <h3>장바구니가 비었습니다.</h3>
         </div>
         <%end%>
     </div>
     <%if @line_items.present?%>
-    <div class="text-center">
-        <span id="order-amount">총 금액: <%= @order.amount %>원</span>
-        <%= link_to "구매하기", edit_order_path(@order)%>
+    <div class="d-flex align-items-center flex-column">
+        <div id="order-amount">총 금액: <%= @order.amount %>원</div>
+        <%= link_to "구매하기", edit_order_path(@order), class: "prod-btn"%>
     </div>
     <%end%>
 
