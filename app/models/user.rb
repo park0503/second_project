@@ -16,6 +16,6 @@ class User < ApplicationRecord
   has_many :followers, through: :received_follows, source: :user
 
   has_many :items, dependent: :destroy
-  has_many :orders, dependent: :destroy
+  has_many :orders, dependent: :nullify
 
 end

@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
     def index
         @items = Item.order(created_at: :desc)
         if current_user.present?
-        order = Order.where(user_id: current_user.id).find_by(status: 0)
+        order = current_user.orders.find_by(status: 0)
             if order.blank?
             Order.create(user: current_user, status: 0, amount: 0)
             end
@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
     end
     def show
        @item = Item.find_by(id: params[:id])
-       @line_item = LineItem.where(order: Order.where(user: current_user).find_by(status: 0)).find_by(item: @item)
+       @line_item = current_user.orders.find_by(status: 0).line_items.find_by(item: @item)
     end
     def create
         item = Item.create item_params
