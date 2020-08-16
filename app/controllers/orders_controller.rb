@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
     end
     def update
        order = Order.find_by(id: params[:id])
-       line_items = LineItem.where(order:order)
+       line_items = order.line_items
        amount = 0
        line_items.each do |line_item|
         amount += line_item.amount
@@ -39,7 +39,7 @@ class OrdersController < ApplicationController
 
     end
     def record
-        @orders = Order.where(user_id: current_user.id).where(status: 1).order(created_at: :desc)
+        @orders = current_user.orders.where(status: 1).order(created_at: :desc)
     end
 
     private
