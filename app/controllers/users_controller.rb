@@ -28,12 +28,12 @@ class UsersController < ApplicationController
 
     def follow
         follow = current_user.follows.find_by(target_id: params[:target_id])
+        @user = User.find_by(id: params[:target_id])
         if follow.present?
             follow.destroy
         else
             Follow.create(user_id: params[:user_id], target_id: params[:target_id])
         end
-        redirect_to "/follow/#{current_user.id}"
     end
 
     private

@@ -40,13 +40,13 @@ class PostsController < ApplicationController
     def toggle
         @post = Post.find_by(id: params[:post_id])
         like = current_user.likes.find_by(post_id: params[:post_id])
-        temp = like
+        #temp = like
         if like.present?
             like.destroy
         else
             Like.create(user_id: current_user.id, post_id: params[:post_id])
             like = current_user.likes.find_by(post_id: params[:post_id])
-            temp = like
+            #temp = like
         end
         #redirect_to post_path(temp.post)
     end

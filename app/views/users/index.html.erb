@@ -16,14 +16,14 @@
             </div>
             <div class="col-md-3 text-right">
                 <%= form_tag("/follow/#{current_user.id}/follow/#{user.id}", method:"post", remote:true) do %>
-                <% if current_user.follows.find_by(target_id: user.id).present? %>
+                <% if current_user == user%>
+                <% elsif current_user.follows.find_by(target_id: user.id).present? %>
                 <button>
-                    <i class="fab fa-twitter followed"></i>
+                    <i class="fab fa-twitter followed" id="follow-<%=user.id%>"></i>
                 </button>
-                <%elsif current_user == user%>
                 <%else%>
                 <button>
-                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-twitter" id="follow-<%=user.id%>"></i>
                 </button>
                 <%end%>
                 <%end%>
