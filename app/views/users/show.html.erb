@@ -20,20 +20,25 @@
                     <% end %>
                 </div>
                 <div class="interaction mr-2">
+                <%= form_tag("/follow/#{current_user.id}/follow/#{@user.id}", method:"post", remote:true) do %>
                     <% if current_user.blank?%>
                     <% elsif @user == current_user %>
                     <%=link_to "프로필 편집", "/users/#{current_user.id}/edit", method: :get%>
                     <%=link_to "구매내역", "/order/record", method: :get%>
                     <% elsif current_user.follows.find_by(target_id: @user.id).present? %>
-                    <%=link_to "언팔로우", "/follow/#{current_user.id}/follow/#{@user.id}", method: :post%>
-                    <% else %>
-                    <%=link_to "팔로우", "/follow/#{current_user.id}/follow/#{@user.id}", method: :post%>
+                <button>
+                    <i class="fab fa-twitter followed" id="follow-<%=@user.id%>"></i>
+                </button>
+                <%elsif%>
+                <button>
+                    <i class="fab fa-twitter" id="follow-<%=@user.id%>"></i>
+                    <%end%>
                     <%end%>
                 </div>
             </div>
             <div class="row justify-content-around mb-2">
                 <span class="mr-2">게시물 <%= @user.posts.size %></span>
-                <span class="mr-2">팔로워 <%= @followers.size %></span>
+                <span class="mr-2" id="followSize">팔로워 <%= @followers.size %></span>
                 <span class="mr-2">팔로우 <%= @follows.size %></span>
             </div>
             <div class="user_description mb-2"><%= @user&.introduce %></div>

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
     def index
         @users = User.all
         @follow = current_user.follows.find_by(target_id: params[:target_id])
+        
     end
     def new
     end
