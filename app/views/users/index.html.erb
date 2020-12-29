@@ -12,7 +12,9 @@
     <div class="list-group-item list-group-item-action">
         <div class="row">
             <div class="col-md-9">
+            <%=link_to "users/#{user.id}" do%>
                 <%= user.email %>
+            <%end%>
             </div>
             <div class="col-md-3 text-right">
                 <%= form_tag("/follow/#{current_user.id}/follow/#{user.id}", method:"post", remote:true) do %>
